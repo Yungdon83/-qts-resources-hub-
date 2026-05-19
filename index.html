@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QTS Resources Hub | Quantity Surveying Department</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2c5282;
+            --accent: #d4a843;
+            --accent-hover: #c49a3a;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+            --radius: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+        }
+
+        [data-theme="dark"] {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f1f5f9;
+            --text-light: #94a3b8;
+            --border: #334155;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.3), 0 2px 4px -2px rgba(0,0,0,0.3);
+            --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.4), 0 8px 10px -6px rgba(0,0,0,0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        [data-theme="dark"] .navbar { background: rgba(15,23,42,0.9); }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0.75rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--primary);
+        }
+        .logo-icon {
+            width: 40px; height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: 700; font-size: 1.1rem;
+        }
+        .logo-text { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.5px; }
+        .logo-sub { font-size: 0.7rem; color: var(--text-light); font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            position: relative;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -4px; left: 0;
+            width: 0; height: 2px; background: var(--accent); transition: var(--transition);
+        }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+        .nav-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .theme-toggle, .user-btn, .mobile-menu-btn {
+            background: none;
+            border: 2px solid var(--border);
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+        .theme-toggle:hover, .user-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: rotate(20deg);
+        }
+
+        .user-btn { width: auto; padding: 0 1rem; border-radius: 50px; gap: 0.5rem; font-size: 0.85rem; font-weight: 600; }
+        .user-btn:hover { transform: none; }
+        .user-btn.logged-in { background: var(--primary); color: white; border-color: var(--primary); }
+        .user-btn.logged-in:hover { background: var(--primary-light); }
+
+        .mobile-menu-btn { display: none; }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 8rem 2rem 4rem;
+            overflow: hidden;
+        }
+        .hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, var(--primary) 0%, #0f172a 100%); z-index: -2; }
+        .hero-pattern {
+            position: absolute; inset: 0;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(212,168,67,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(44,82,130,0.2) 0%, transparent 50%);
+            z-index: -1;
+        }
+        .hero-grid {
+            position: absolute; inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: -1;
+        }
+        .hero-content { max-width: 900px; text-align: center; z-index: 1; }
+
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: rgba(212,168,67,0.15);
+            border: 1px solid rgba(212,168,67,0.3);
+            color: var(--accent);
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-size: 0.85rem; font-weight: 600;
+            margin-bottom: 2rem;
+            animation: fadeInDown 0.8s ease;
+        }
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            color: white;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+        .hero-title span { color: var(--accent); position: relative; }
+        .hero-desc {
+            font-size: 1.15rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 2rem; font-weight: 800; color: var(--accent); }
+        .stat-label { font-size: 0.85rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; }
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.8s both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary { background: var(--accent); color: var(--primary); }
+        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(212,168,67,0.3); }
+        .btn-outline { background: transparent; color: white; border: 2px solid rgba(255,255,255,0.3); }
+        .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: white; transform: translateY(-2px); }
+        .btn-sm { padding: 0.6rem 1.2rem; font-size: 0.85rem; }
+        .btn-ghost { background: transparent; color: var(--text-light); border: 1px solid var(--border); }
+        .btn-ghost:hover { background: var(--bg); color: var(--text); }
+
+        .search-section {
+            padding: 3rem 2rem;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+        }
+        .search-container { max-width: 700px; margin: 0 auto; position: relative; }
+        .search-box {
+            width: 100%;
+            padding: 1.25rem 1.5rem 1.25rem 3.5rem;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-lg);
+            font-size: 1rem;
+            background: var(--bg);
+            color: var(--text);
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        .search-box:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(212,168,67,0.1); }
+        .search-icon { position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); color: var(--text-light); font-size: 1.1rem; }
+        .search-filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .filter-chip {
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text-light);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        .filter-chip:hover, .filter-chip.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .recent-section {
+            padding: 4rem 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        .recent-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .recent-header-left { display: flex; align-items: center; gap: 1rem; }
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(16,185,129,0.1);
+            color: var(--success);
+            padding: 0.35rem 0.85rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .live-dot {
+            width: 8px; height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .recent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        .recent-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition);
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text);
+            position: relative;
+            overflow: hidden;
+        }
+        .recent-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 4px;
+            background: var(--accent);
+            transform: scaleY(0);
+            transition: var(--transition);
+        }
+        .recent-card:hover { transform: translateX(5px); box-shadow: var(--shadow); border-color: var(--accent); }
+        .recent-card:hover::before { transform: scaleY(1); }
+
+        .recent-icon {
+            width: 48px; height: 48px;
+            background: linear-gradient(135deg, rgba(30,58,95,0.1), rgba(44,82,130,0.1));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+        .recent-info { flex: 1; min-width: 0; }
+        .recent-code { font-weight: 700; font-size: 0.85rem; color: var(--primary); margin-bottom: 0.2rem; }
+        .recent-name { font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .recent-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+        .recent-meta span { display: flex; align-items: center; gap: 0.3rem; }
+        .recent-meta .badge {
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .badge-sem1 { background: rgba(59,130,246,0.15); color: var(--info); }
+        .badge-sem2 { background: rgba(245,158,11,0.15); color: var(--warning); }
+        .badge-new {
+            background: rgba(16,185,129,0.15);
+            color: var(--success);
+            animation: pulse 2s infinite;
+        }
+        .recent-action {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        .recent-card:hover .recent-action { background: var(--accent); color: var(--primary); }
+
+        .levels-section {
+            padding: 5rem 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        .section-header { text-align: center; margin-bottom: 3rem; }
+        .section-label {
+            display: inline-block;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.75rem;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+        .section-desc { color: var(--text-light); max-width: 500px; margin: 0 auto; }
+
+        .levels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .level-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .level-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: var(--accent); }
+
+        .level-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .level-header::after {
+            content: '';
+            position: absolute;
+            top: -50%; right: -20%;
+            width: 200px; height: 200px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+        .level-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .level-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 0.35rem 0.85rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+        .level-icon-header {
+            width: 44px; height: 44px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .level-title-header { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .level-subtitle-header { font-size: 0.85rem; opacity: 0.8; }
+
+        .level-body { padding: 1.5rem; }
+
+        .semester-block {
+            margin-bottom: 1.5rem;
+        }
+        .semester-block:last-child { margin-bottom: 0; }
+
+        .semester-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border);
+        }
+        .semester-dot {
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .semester-dot.sem1 { background: var(--info); box-shadow: 0 0 0 3px rgba(59,130,246,0.2); }
+        .semester-dot.sem2 { background: var(--warning); box-shadow: 0 0 0 3px rgba(245,158,11,0.2); }
+
+        .semester-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text);
+        }
+        .semester-count {
+            margin-left: auto;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            background: var(--bg);
+            padding: 0.2rem 0.6rem;
+            border-radius: 50px;
+        }
+
+        .course-list { display: flex; flex-direction: column; gap: 0.5rem; }
+
+        .course-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.85rem 1rem;
+            background: var(--bg);
+            border-radius: 10px;
+            transition: var(--transition);
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text);
+            border: 1px solid transparent;
+        }
+        .course-item:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(5px);
+            border-color: var(--primary);
+        }
+        .course-item:hover .course-code { color: var(--accent); }
+        .course-item:hover .course-icon { background: rgba(255,255,255,0.15); }
+
+        .course-icon {
+            width: 36px; height: 36px;
+            background: rgba(30,58,95,0.08);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+        .course-info { flex: 1; min-width: 0; }
+        .course-code {
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: va
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">QTS</div>
+                <div>
+                    <div class="logo-text">Resources Hub</div>
+                    <div class="logo-sub">Quantity Surveying</div>
+                </div>
+            </a>
+            <span style="font-size: 0.7rem; color: var(--text-light); margin-left: -1rem; opacity: 0.7;">by Opatola A.G.</span>
+            <div class="nav-links" id="navLinks">
+                <a href="#home" class="active">Home</a>
+                <a href="#recent">Recent</a>
+                <a href="#levels">Resources</a>
+                <a href="#upload">Upload</a>
+                <a href="#about">About</a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="user-btn" id="userBtn" onclick="openModal('login')">
+                    <i class="fas fa-user"></i>
+                    <span>Login</span>
+                </button>
+                <div class="user-profile" id="userProfile">
+                    <div class="user-avatar" id="userAvatar">JD</div>
+                    <div>
+                        <div class="user-name" id="userName">John Doe</div>
+                        <div class="user-level" id="userLevel">300L Student</div>
+                    </div>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-pattern"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-graduation-cap"></i>
+                Official QTS Department Resource Center
+            </div>
+            <h1 class="hero-title">
+                Your Gateway to <span>Quantity Surveying</span> Excellence
+            </h1>
+            <p class="hero-desc">
+                Access comprehensive lecture slides, materials, and resources for all levels
+                from 100L to 500L. Developed by Opatola Abdulhamid Gbolahan for QTS Students.
+            </p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Levels</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">Semesters</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">73</div>
+                    <div class="stat-label">Courses</div>
+                </div>
+            </div>
+            <div class="hero-cta">
+                <a href="#levels" class="btn btn-primary">
+                    <i class="fas fa-book-open"></i>
+                    Browse Resources
+                </a>
+                <a href="#upload" class="btn btn-outline">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    Upload Slides
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="search-section">
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-box" id="searchBox" placeholder="Search courses, codes, topics, or semesters...">
+            <div class="search-filters">
+                <button class="filter-chip active" data-filter="all">All Levels</button>
+                <button class="filter-chip" data-filter="100">100L</button>
+                <button class="filter-chip" data-filter="200">200L</button>
+                <button class="filter-chip" data-filter="300">300L</button>
+                <button class="filter-chip" data-filter="400">400L</button>
+                <button class="filter-chip" data-filter="500">500L</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="recent-section" id="recent">
+        <div class="recent-header">
+            <div class="recent-header-left">
+                <div class="section-label">Latest Updates</div>
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    <span>Live Updates</span>
+                </div>
+            </div>
+            <a href="#levels" class="btn btn-ghost btn-sm">
+                View All <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        <h2 class="section-title" style="margin-bottom: 0.5rem;">Recently Added</h2>
+        <p class="section-desc" style="text-align: left; margin: 0 0 2rem 0;">
+            Fresh slides uploaded by the community. Stay up to date with the latest materials.
+        </p>
+        <div class="recent-grid" id="recentGrid"></div>
+    </section>
+
+    <section class="levels-section" id="levels">
+        <div class="section-header reveal">
+            <div class="section-label">Academic Resources</div>
+            <h2 class="section-title">Browse by Level & Semester</h2>
+            <p class="section-desc">
+                Each level is clearly divided into 1st and 2nd semester. Select your courses below.
+            </p>
+        </div>
+        <div class="levels-grid" id="levelsGrid"></div>
+        <div class="no-results" id="noResults">
+            <i class="fas fa-search"></i>
+            <h3>No courses found</h3>
+            <p>Try adjusting your search terms or filters.</p>
+        </div>
+    </section>
+
+    <section class="upload-section" id="upload">
+        <div class="upload-pattern"></div>
+        <div class="upload-container reveal">
+            <div class="section-label">Contribute</div>
+            <h2 class="section-title">Upload Your Slides</h2>
+            <p class="section-desc">
+                Help your fellow students by sharing lecture slides and course materials.
+                Together we build a comprehensive resource library.
+            </p>
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon floating">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="upload-text">Drag &amp; drop your files here</div>
+                <div class="upload-hint">or click to browse &bull; PDF, PPT, PPTX supported &bull; Max 50MB</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section" id="about">
+        <div class="section-header reveal">
+            <div class="section-label">About Us</div>
+            <h2 class="section-title">Built for QTS Students</h2>
+            <p class="section-desc">
+                This platform was developed by <strong style="color: var(--accent);">Opatola Abdulhamid Gbolahan</strong> and is dedicated to making academic resources accessible to all Quantity Surveying students.
+            </p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card reveal">
+                <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                <div class="feature-title">Recently Added</div>
+                <div class="feature-desc">See the newest slides as soon as they are uploaded. Never miss an update.</div>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon"><i class="fas fa-search"></i></div>
+                <div class="feature-title">Smart Search</div>
+                <div class="feature-desc">Find any course instantly by code, name, or semester across all levels.</div>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon"><i class="fas fa-users"></i></div>
+                <div class="feature-title">Community Driven</div>
+                <div class="feature-desc">Students helping students. Upload and share to support your peers.</div>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                <div class="feature-title">Mobile Friendly</div>
+                <div class="feature-desc">Access resources anywhere, anytime. Fully responsive on all devices.</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div>
+                <div class="footer-brand">
+                    <div class="logo-icon" style="width: 36px; height: 36px; font-size: 0.9rem;">QTS</div>
+                    <div>
+                        <div style="font-weight: 700; color: var(--text);">Resources Hub</div>
+                        <div style="font-size: 0.75rem; color: var(--text-light);">Quantity Surveying Dept.</div>
+                    </div>
+                </div>
+                <p class="footer-desc">
+                    A student-led initiative to democratize access to academic resources
+                    for the Quantity Surveying Department.
+                </p>
+            </div>
+            <div>
+                <h4 class="footer-title">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#home"><i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i> Home</a></li>
+                    <li><a href="#recent"><i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i> Recent</a></li>
+                    <li><a href="#levels"><i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i> Resources</a></li>
+                    <li><a href="#upload"><i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i> Upload</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Resources</h4>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="filterLevel('100'); return false;"><i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i> 100 Level</a></li>
+                    <li><a href="#" onclick="filterLevel('200'); return false;"><i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i> 200 Level</a></li>
+                    <li><a href="#" onclick="filterLevel('300'); return false;"><i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i> 300 Level</a></li>
+                    <li><a href="#" onclick="filterLevel('400'); return false;"><i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i> 400 Level</a></li>
+                    <li><a href="#" onclick="filterLevel('500'); return false;"><i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i> 500 Level</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Developer</h4>
+                <p class="footer-desc" style="margin-bottom: 0.5rem;">
+                    <strong style="color: var(--accent);">Opatola Abdulhamid Gbolahan</strong>
+                </p>
+                <p class="footer-desc" style="font-size: 0.8rem;">
+                    Quantity Surveying Student & Web Developer
+                </p>
+                <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+                    <a href="#" style="width: 36px; height: 36px; border-radius: 50%; background: var(--bg); display: flex; align-items: center; justify-content: center; color: var(--text-light); text-decoration: none; transition: var(--transition); border: 1px solid var(--border);">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" style="width: 36px; height: 36px; border-radius: 50%; background: var(--bg); display: flex; align-items: center; justify-content: center; color: var(--text-light); text-decoration: none; transition: var(--transition); border: 1px solid var(--border);">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" style="width: 36px; height: 36px; border-radius: 50%; background: var(--bg); display: flex; align-items: center; justify-content: center; color: var(--text-light); text-decoration: none; transition: var(--transition); border: 1px solid var(--border);">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="mailto:opatola.abdulhamid@email.com" style="width: 36px; height: 36px; border-radius: 50%; background: var(--bg); display: flex; align-items: center; justify-content: center; color: var(--text-light); text-decoration: none; transition: var(--transition); border: 1px solid var(--border);">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h4 class="footer-title">Contact</h4>
+                <ul class="footer-links">
+                    <li><a href="mailto:qts.resources@university.edu"><i class="fas fa-envelope"></i> qts.resources@university.edu</a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> QTS Department Building</a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i> +234 xxx xxx xxxx</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; QTS Resources Hub. Built with <i class="fas fa-heart" style="color: #ef4444;"></i> by <strong>Opatola Abdulhamid Gbolahan</strong> for QTS Students.</p>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Welcome Back</h3>
+                <button class="modal-close" onclick="closeModal('login')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="login-tabs">
+                <button class="login-tab active" onclick="switchLoginTab('login')">Login</button>
+                <button class="login-tab" onclick="switchLoginTab('register')">Register</button>
+            </div>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" placeholder="your.email@university.edu" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+            </form>
+            <form id="registerForm" onsubmit="handleRegister(event)" style="display: none;">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" placeholder="your.email@university.edu" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Current Level</label>
+                    <select class="form-input" style="cursor: pointer;">
+                        <option value="">Select your level</option>
+                        <option value="100">100 Level</option>
+                        <option value="200">200 Level</option>
+                        <option value="300">300 Level</option>
+                        <option value="400">400 Level</option>
+                        <option value="500">500 Level</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" placeholder="Create a password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </form>
+            <div class="modal-footer">
+                <p id="modalFooterText">Don't have an account? <a href="#" onclick="switchLoginTab('register')">Register</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle toast-icon"></i>
+        <span class="toast-message" id="toastMessage">Action completed successfully!</span>
+    </div>
+    <script>
+        const courseData = {
+            100: {
+                title: "100 Level",
+                subtitle: "Foundation Year - Building the Basics",
+                icon: "fa-seedling",
+                courses: {
+                    first: [
+                        { code: "QTS 101", name: "Introduction to Quantity Surveying", file: "qts101_intro.pdf", date: "2026-05-15" },
+                        { code: "QTS 103", name: "Building Technology I", file: "qts103_building_tech1.pdf", date: "2026-05-14" },
+                        { code: "MTH 101", name: "Elementary Mathematics I", file: "mth101_math1.pdf", date: "2026-05-13" },
+                        { code: "PHY 101", name: "General Physics I", file: "phy101_physics1.pdf", date: "2026-05-12" },
+                        { code: "GST 111", name: "Philosophy, Logic & Human Existence", file: "gst111_philosophy.pdf", date: "2026-05-11" },
+                        { code: "COS 101", name: "Introduction to Computer Science", file: "cos101_computers.pdf", date: "2026-05-10" },
+                        { code: "QTS 105", name: "Technical Drawing for QS", file: "qts105_technical_drawing.pdf", date: "2026-05-09" },
+                        { code: "ACH 103", name: "Architectural Design I", file: "ach103_architecture.pdf", date: "2026-05-08" },
+                        { code: "QTS 107", name: "Workshop Practice", file: "qts107_workshop.pdf", date: "2026-05-07" },
+                        { code: "URP 101", name: "Introduction to Urban Planning", file: "urp101_urban_planning.pdf", date: "2026-05-06" }
+                    ],
+                    second: [
+                        { code: "QTS 102", name: "Principles of Measurement", file: "qts102_measurement.pdf", date: "2026-05-05" },
+                        { code: "QTS 104", name: "Building Technology II", file: "qts104_building_tech2.pdf", date: "2026-05-04" },
+                        { code: "PHY 102", name: "General Physics II", file: "phy102_physics2.pdf", date: "2026-05-03" },
+                        { code: "GST 112", name: "Nigerian Peoples & Culture", file: "gst112_culture.pdf", date: "2026-05-02" },
+                        { code: "STA 121", name: "Probability I", file: "sta121_probability.pdf", date: "2026-05-01" },
+                        { code: "QTS 106", name: "Construction Materials", file: "qts106_materials.pdf", date: "2026-04-30" },
+                        { code: "ACH 105", name: "Architectural Design II", file: "ach105_architecture2.pdf", date: "2026-04-29" },
+                        { code: "GES 107", name: "Science, Engineering & Technology", file: "ges107_science.pdf", date: "2026-04-28" },
+                        { code: "GES 108", name: "Basic Engineering Practice", file: "ges108_engineering.pdf", date: "2026-04-27" }
+                    ]
+                }
+            },
+            200: {
+                title: "200 Level",
+                subtitle: "Intermediate Studies - Core Principles",
+                icon: "fa-layer-group",
+                courses: {
+                    first: [
+                        { code: "QTS 201", name: "Measurement of Building Works I", file: "qts201_measurement1.pdf", date: "2026-05-15" },
+                        { code: "QTS 203", name: "Construction Technology I", file: "qts203_construction_tech1.pdf", date: "2026-05-14" },
+                        { code: "QTS 205", name: "Building Services I", file: "qts205_services1.pdf", date: "2026-05-13" },
+                        { code: "MTH 102", name: "Elementary Mathematics II", file: "mth102_math2.pdf", date: "2026-05-12" },
+                        { code: "GES 201", name: "Entrepreneurship Studies", file: "ges201_entrepreneurship.pdf", date: "2026-05-11" },
+                        { code: "URP 205", name: "Land Use Planning", file: "urp205_land_use.pdf", date: "2026-05-10" },
+                        { code: "ECO 201", name: "Principles of Economics", file: "eco201_economics.pdf", date: "2026-05-09" },
+                        { code: "QTS 207", name: "Structural Mechanics I", file: "qts207_structural_mech1.pdf", date: "2026-05-08" }
+                    ],
+                    second: [
+                        { code: "QTS 202", name: "Measurement of Building Works II", file: "qts202_measurement2.pdf", date: "2026-05-07" },
+                        { code: "QTS 204", name: "Construction Technology II", file: "qts204_construction_tech2.pdf", date: "2026-05-06" },
+                        { code: "GST 212", name: "Philosophy, Logic & Ethics", file: "gst212_ethics.pdf", date: "2026-05-05" },
+                        { code: "STA 212", name: "Probability II", file: "sta212_probability2.pdf", date: "2026-05-04" },
+                        { code: "QTS 208", name: "Structural Mechanics II", file: "qts208_structural_mech2.pdf", date: "2026-05-03" },
+                        { code: "QTS 206", name: "Building Services II", file: "qts206_services2.pdf", date: "2026-05-02" },
+                        { code: "ECO 202", name: "Principles of Economics II", file: "eco202_economics2.pdf", date: "2026-05-01" },
+                        { code: "GES 103", name: "Communication in English", file: "ges103_english.pdf", date: "2026-04-30" }
+                    ]
+                }
+            },
+            300: {
+                title: "300 Level",
+                subtitle: "Advanced Studies - Professional Core",
+                icon: "fa-hard-hat",
+                courses: {
+                    first: [
+                        { code: "QTS 301", name: "Advanced Measurement I", file: "qts301_advanced_measurement1.pdf", date: "2026-05-15" },
+                        { code: "QTS 303", name: "Construction Management I", file: "qts303_construction_management1.pdf", date: "2026-05-14" },
+                        { code: "QTS 305", name: "Estimating & Costing I", file: "qts305_estimating1.pdf", date: "2026-05-13" },
+                        { code: "QTS 307", name: "Quantity Surveying Practice I", file: "qts307_qs_practice1.pdf", date: "2026-05-12" },
+                        { code: "QTS 309", name: "Civil Engineering Measurement", file: "qts309_civil_measurement.pdf", date: "2026-05-11" },
+                        { code: "QTS 311", name: "Tendering & Contract Procedure", file: "qts311_tendering.pdf", date: "2026-05-10" },
+                        { code: "QTS 313", name: "Professional Practice I", file: "qts313_professional_practice1.pdf", date: "2026-05-09" }
+                    ],
+                    second: [
+                        { code: "QTS 302", name: "Advanced Measurement II", file: "qts302_advanced_measurement2.pdf", date: "2026-05-08" },
+                        { code: "QTS 304", name: "Construction Management II", file: "qts304_construction_management2.pdf", date: "2026-05-07" },
+                        { code: "QTS 306", name: "Estimating & Costing II", file: "qts306_estimating2.pdf", date: "2026-05-06" },
+                        { code: "QTS 308", name: "Quantity Surveying Practice II", file: "qts308_qs_practice2.pdf", date: "2026-05-05" },
+                        { code: "QTS 310", name: "Project Management", file: "qts310_project_management.pdf", date: "2026-05-04" },
+                        { code: "QTS 312", name: "Arbitration & Dispute Resolution", file: "qts312_arbitration.pdf", date: "2026-05-03" },
+                        { code: "QTS 314", name: "Professional Practice II", file: "qts314_professional_practice2.pdf", date: "2026-05-02" }
+                    ]
+                }
+            },
+            400: {
+                title: "400 Level",
+                subtitle: "Pre-Professional - Specialization",
+                icon: "fa-drafting-compass",
+                courses: {
+                    first: [
+                        { code: "QTS 401", name: "Advanced QS Practice", file: "qts401_advanced_qs.pdf", date: "2026-05-15" },
+                        { code: "QTS 403", name: "Construction Economics", file: "qts403_construction_economics.pdf", date: "2026-05-14" },
+                        { code: "QTS 405", name: "Value Engineering", file: "qts405_value_engineering.pdf", date: "2026-05-13" },
+                        { code: "QTS 407", name: "Facilities Management", file: "qts407_facilities_management.pdf", date: "2026-05-12" },
+                        { code: "QTS 409", name: "Sustainability in Construction", file: "qts409_sustainability.pdf", date: "2026-05-11" },
+                        { code: "QTS 411", name: "Research Methods", file: "qts411_research_methods.pdf", date: "2026-05-10" }
+                    ],
+                    second: [
+                        { code: "QTS 402", name: "Construction Law", file: "qts402_construction_law.pdf", date: "2026-05-09" },
+                        { code: "QTS 404", name: "BIM & Digital Construction", file: "qts404_bim.pdf", date: "2026-05-08" },
+                        { code: "QTS 406", name: "Risk Management", file: "qts406_risk_management.pdf", date: "2026-05-07" },
+                        { code: "QTS 408", name: "Strategic Management", file: "qts408_strategic_management.pdf", date: "2026-05-06" },
+                        { code: "QTS 410", name: "International Construction", file: "qts410_international.pdf", date: "2026-05-05" },
+                        { code: "QTS 412", name: "Research Project I", file: "qts412_research_project1.pdf", date: "2026-05-04" }
+                    ]
+                }
+            },
+            500: {
+                title: "500 Level",
+                subtitle: "Final Year - Professional Mastery",
+                icon: "fa-award",
+                courses: {
+                    first: [
+                        { code: "QTS 501", name: "Professional QS Practice", file: "qts501_professional_practice.pdf", date: "2026-05-15" },
+                        { code: "QTS 503", name: "Advanced Project Management", file: "qts503_advanced_pm.pdf", date: "2026-05-14" },
+                        { code: "QTS 505", name: "Construction Claims & Disputes", file: "qts505_claims.pdf", date: "2026-05-13" },
+                        { code: "QTS 507", name: "Procurement Management", file: "qts507_procurement.pdf", date: "2026-05-12" },
+                        { code: "QTS 509", name: "IT Applications in QS", file: "qts509_it_qs.pdf", date: "2026-05-11" },
+                        { code: "QTS 511", name: "Research Project II", file: "qts511_research_project2.pdf", date: "2026-05-10" }
+                    ],
+                    second: [
+                        { code: "QTS 502", name: "Professional Ethics", file: "qts502_ethics.pdf", date: "2026-05-09" },
+                        { code: "QTS 504", name: "Entrepreneurship in QS", file: "qts504_entrepreneurship.pdf", date: "2026-05-08" },
+                        { code: "QTS 506", name: "Construction Health & Safety", file: "qts506_health_safety.pdf", date: "2026-05-07" },
+                        { code: "QTS 508", name: "Maintenance Management", file: "qts508_maintenance.pdf", date: "2026-05-06" },
+                        { code: "QTS 510", name: "Seminar & Viva Voce", file: "qts510_seminar.pdf", date: "2026-05-05" },
+                        { code: "QTS 512", name: "Research Project III", file: "qts512_research_project3.pdf", date: "2026-05-04" }
+                    ]
+                }
+            }
+        };
+
+        function generateRecentlyAdded() {
+            const grid = document.getElementById('recentGrid');
+            let allCourses = [];
+            Object.keys(courseData).forEach(level => {
+                const data = courseData[level];
+                ['first', 'second'].forEach(sem => {
+                    data.courses[sem].forEach(course => {
+                        allCourses.push({
+                            ...course,
+                            level: level,
+                            levelTitle: data.title,
+                            semester: sem === 'first' ? '1st' : '2nd',
+                            semesterFull: sem === 'first' ? '1st Semester' : '2nd Semester'
+                        });
+                    });
+                });
+            });
+            allCourses.sort((a, b) => new Date(b.date) - new Date(a.date));
+            const recent = allCourses.slice(0, 8);
+            grid.innerHTML = recent.map((course, index) => {
+                const isNew = index < 3;
+                const daysAgo = Math.floor((new Date() - new Date(course.date)) / (1000 * 60 * 60 * 24));
+                const timeText = daysAgo === 0 ? 'Today' : daysAgo === 1 ? 'Yesterday' : daysAgo + ' days ago';
+                return `
+                    <a href="files/${course.level}L/${course.file}" class="recent-card" download onclick="showToast('Downloading ${course.code}...')">
+                        <div class="recent-icon"><i class="fas fa-file-pdf"></i></div>
+                        <div class="recent-info">
+                            <div class="recent-code">${course.code}</div>
+                            <div class="recent-name">${course.name}</div>
+                            <div class="recent-meta">
+                                <span><i class="fas fa-layer-group"></i> ${course.levelTitle}</span>
+                                <span class="badge ${course.semester === '1st' ? 'badge-sem1' : 'badge-sem2'}">${course.semesterFull}</span>
+                                ${isNew ? '<span class="badge badge-new">NEW</span>' : ''}
+                                <span><i class="fas fa-clock"></i> ${timeText}</span>
+                            </div>
+                        </div>
+                        <div class="recent-action"><i class="fas fa-download"></i></div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        function generateLevelCards() {
+            const grid = document.getElementById('levelsGrid');
+            grid.innerHTML = '';
+            Object.keys(courseData).forEach(level => {
+                const data = courseData[level];
+                const card = document.createElement('div');
+                card.className = 'level-card reveal';
+                card.dataset.level = level;
+                const firstCount = data.courses.first.length;
+                const secondCount = data.courses.second.length;
+                card.innerHTML = `
+                    <div class="level-header">
+                        <div class="level-header-top">
+                            <span class="level-badge">${firstCount + secondCount} Courses</span>
+                            <div class="level-icon-header"><i class="fas ${data.icon}"></i></div>
+                        </div>
+                        <div class="level-title-header">${data.title}</div>
+                        <div class="level-subtitle-header">${data.subtitle}</div>
+                    </div>
+                    <div class="level-body">
+                        <div class="semester-block">
+                            <div class="semester-header">
+                                <div class="semester-dot sem1"></div>
+                                <span class="semester-title">1st Semester</span>
+                                <span class="semester-count">${firstCount} courses</span>
+                            </div>
+                            <div class="course-list">
+                                ${generateCourseList(data.courses.first, level, '1st')}
+                            </div>
+                        </div>
+                        <div class="semester-block">
+                            <div class="semester-header">
+                                <div class="semester-dot sem2"></div>
+                                <span class="semester-title">2nd Semester</span>
+                                <span class="semester-count">${secondCount} courses</span>
+                            </div>
+                            <div class="course-list">
+                                ${generateCourseList(data.courses.second, level, '2nd')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function generateCourseList(courses, level, semester) {
+            return courses.map(course => `
+                <a href="files/${level}L/${course.file}" class="course-item" download onclick="showToast('Downloading ${course.code}...')">
+                    <div class="course-icon"><i class="fas fa-file-pdf"></i></div>
+                    <div class="course-info">
+                        <div class="course-code">${course.code}</div>
+                        <div class="course-name">${course.name}</div>
+                    </div>
+                    <div class="course-action"><i class="fas fa-download"></i></div>
+                </a>
+            `).join('');
+        }
+
+        const searchBox = document.getElementById('searchBox');
+        const filterChips = document.querySelectorAll('.filter-chip');
+        let currentFilter = 'all';
+
+        searchBox.addEventListener('input', (e) => {
+            filterCourses(e.target.value.toLowerCase(), currentFilter);
+        });
+
+        filterChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                filterChips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                currentFilter = chip.dataset.filter;
+                filterCourses(searchBox.value.toLowerCase(), currentFilter);
+            });
+        });
+
+        function filterCourses(query, levelFilter) {
+            const cards = document.querySelectorAll('.level-card');
+            let hasResults = false;
+            cards.forEach(card => {
+                const level = card.dataset.level;
+                const courseItems = card.querySelectorAll('.course-item');
+                let levelMatch = levelFilter === 'all' || level === levelFilter;
+                let hasVisibleCourses = false;
+                courseItems.forEach(item => {
+                    const code = item.querySelector('.course-code').textContent.toLowerCase();
+                    const name = item.querySelector('.course-name').textContent.toLowerCase();
+                    const matchesQuery = !query || code.includes(query) || name.includes(query);
+                    const matchesLevel = levelFilter === 'all' || level === levelFilter;
+                    if (matchesQuery && matchesLevel) {
+                        item.style.display = 'flex';
+                        hasVisibleCourses = true;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                card.querySelectorAll('.semester-block').forEach(block => {
+                    const visibleItems = block.querySelectorAll('.course-item[style="display: flex;"], .course-item:not([style])');
+                    const allItems = block.querySelectorAll('.course-item');
+                    let hasVisible = false;
+                    allItems.forEach(item => {
+                        if (item.style.display !== 'none') hasVisible = true;
+                    });
+                    block.style.display = hasVisible ? 'block' : 'none';
+                });
+                if (levelMatch && hasVisibleCourses) {
+                    card.style.display = 'block';
+                    hasResults = true;
+                } else if (levelMatch && !query) {
+                    card.style.display = 'block';
+                    courseItems.forEach(item => item.style.display = 'flex');
+                    card.querySelectorAll('.semester-block').forEach(b => b.style.display = 'block');
+                    hasResults = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            document.getElementById('noResults').style.display = hasResults ? 'none' : 'block';
+        }
+
+        function filterLevel(level) {
+            filterChips.forEach(c => c.classList.remove('active
